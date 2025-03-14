@@ -12,10 +12,7 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        $categories = ProductCategory::all();
-        // no need for now to paginate
-//        $categories = ProductCategory::paginate(10);
-        return response()->json($categories);
+        //
     }
 
     /**
@@ -64,5 +61,14 @@ class ProductCategoryController extends Controller
     public function destroy(ProductCategory $productCategory)
     {
         //
+    }
+
+
+    public function getAllProductCategories()
+    {
+        $categories = ProductCategory::all();
+        // no need for now to paginate
+//        $categories = ProductCategory::paginate(10);
+        return response()->json($categories);
     }
 }
