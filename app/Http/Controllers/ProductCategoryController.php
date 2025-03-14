@@ -12,7 +12,10 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = ProductCategory::all();
+        // no need for now to paginate
+//        $categories = ProductCategory::paginate(10);
+        return response()->json($categories);
     }
 
     /**
