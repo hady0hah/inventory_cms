@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\PublishedScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,5 +23,8 @@ class BaseModel extends Model
         'published' => 'boolean', // Cast the published field to boolean
     ];
 
-
+    protected static function booted()
+    {
+        static::addGlobalScope(new PublishedScope());
+    }
 }
