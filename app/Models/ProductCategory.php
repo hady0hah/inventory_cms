@@ -18,4 +18,9 @@ class ProductCategory extends BaseModel
         'published',
         'description',
     ];
+
+    public function items()
+    {
+        return $this->hasMany(ProductCategory::class, 'product_category_id');
+    }
 }
