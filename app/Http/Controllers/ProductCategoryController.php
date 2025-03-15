@@ -18,10 +18,29 @@ class ProductCategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('categories', 'public');
+        } else {
+            $imagePath = null;
+        }
+
+        $category = ProductCategory::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'image_path' => $imagePath,
+        ]);
+
+        return response()->json(['message' => 'Category created successfully!', 'category' => $category], 201);
     }
+
 
     /**
      * Store a newly created resource in storage.
