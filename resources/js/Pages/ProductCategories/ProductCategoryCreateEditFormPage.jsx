@@ -8,9 +8,13 @@ export default function ProductCategoryCreateEditFormPage({ categoryToEdit, clos
     const [imagePath, setImagePath] = useState('');
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
+
     const handleFileChange = (e) => {
-        setImagePath(e.target.files[0]);
+        const file = e.target.files[0];
+        setImage(file);
+        setImagePath(URL.createObjectURL(file));
     };
+
     useEffect(() => {
         if (categoryToEdit) {
             setName(categoryToEdit.name);
@@ -23,15 +27,19 @@ export default function ProductCategoryCreateEditFormPage({ categoryToEdit, clos
         e.preventDefault();
         setLoading(true);
 
-        const categoryData = {
-            name,
-            description,
-            image_path: imagePath,
-        };
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('description', description);
+
+        if (image) {
+            formData.append('image', image);
+        } else if (categoryToEdit && categoryToEdit.image_path) {
+            formData.append('image_path', categoryToEdit.image_path);
+        }
 
         const request = categoryToEdit
-            ? axios.put(endpoints.resolve(endpoints.product_categories.edit, { id: categoryToEdit.id }), categoryData)
-            : axios.post(endpoints.product_categories.create, categoryData);
+            ? axios.put(endpoints.resolve(endpoints.product_categories.edit, { id: categoryToEdit.id }), formData)
+            : axios.post(endpoints.product_categories.create, formData);
 
         request
             .then((response) => {
@@ -68,6 +76,7 @@ export default function ProductCategoryCreateEditFormPage({ categoryToEdit, clos
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
             </div>
+            {imagePath && <img src={imagePath} alt="Preview" className="mt-2 w-32 h-32 object-cover" />}
             <div className="flex justify-end">
                 <button
                     type="button"
