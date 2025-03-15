@@ -1,9 +1,11 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import ProductCategoriesListPage from '@/Pages/ProductCategories/ProductCategoriesListPage';
 import {Head, usePage} from '@inertiajs/react';
 
 export default function Dashboard() {
     const user = usePage().props.auth.user;
     return (
+        <>
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
@@ -19,13 +21,22 @@ export default function Dashboard() {
                         <div className="p-6 text-gray-900">
                             Welcome {user.name} !
                         </div>
+
                     </div>
+                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg mt-4">
+                        <ProductCategoriesListPage>
+
+                        </ProductCategoriesListPage>
+                    </div>
+
                 </div>
             </div>
         </AuthenticatedLayout>
+
+
+        </>
     );
 }
-
 
 
 
