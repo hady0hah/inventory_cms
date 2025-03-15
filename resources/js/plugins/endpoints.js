@@ -6,10 +6,12 @@ let endpoints = {
         'edit':     '/api/category/edit/:id',
     },
     'items': {
-        'list':     '/api/items/category?id=:id',
-        'add':      '/api/items',
-        'delete':   '/api/items/delete?id=:id',
-        'edit':     '/api/items/edit?id=:id',
+        'list_page':     '/items_list/:category_id',
+        'list_data':     '/api/item/category/:category_id',
+        'add':      '/api/item',
+        'delete':   '/api/item/delete/:id',
+        'edit':     '/api/item/edit/:id',
+        'change_status': '/api/item/status/:id',
     },
 
     resolve(url, params) {
