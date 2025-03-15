@@ -3,7 +3,7 @@ let endpoints = {
         'list':     '/api/category/getAll',
         'create':      '/api/category/create',
         'delete':   '/api/category/delete/:id',
-        'edit':     '/api/category/edit?id=:id',
+        'edit':     '/api/category/edit/:id',
     },
     'items': {
         'list':     '/api/items/category?id=:id',

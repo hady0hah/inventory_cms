@@ -3,7 +3,7 @@ import { usePage } from '@inertiajs/react';
 import { Link } from '@inertiajs/react';
 import axios from 'axios';
 import endpoints from '@/plugins/endpoints';
-import ProductCategoryCreatePage from './ProductCategoryCreatePage';
+import ProductCategoryCreateEditFormPage from './ProductCategoryCreateEditFormPage';
 
 export default function ProductCategoriesListPage() {
     const user = usePage().props.auth.user;
@@ -13,6 +13,7 @@ export default function ProductCategoriesListPage() {
     const [error, setError] = useState(null);
     const [search, setSearch] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [categoryToEdit, setCategoryToEdit] = useState(null);
 
     useEffect(() => {
         axios.get(endpoints.product_categories.list)
@@ -56,11 +57,18 @@ export default function ProductCategoriesListPage() {
     };
 
     const handleCreateCategory = () => {
+        setCategoryToEdit(null);
+        setIsModalOpen(true);
+    };
+
+    const handleEditCategory = (category) => {
+        setCategoryToEdit(category);
         setIsModalOpen(true);
     };
 
     const closeModal = () => {
         setIsModalOpen(false);
+        setCategoryToEdit(null);
     };
 
     return (
@@ -105,12 +113,12 @@ export default function ProductCategoriesListPage() {
                                     <td className="border border-gray-300 px-4 py-2">{category.name}</td>
                                     <td className="border border-gray-300 px-4 py-2">{category.available_items_count}</td>
                                     <td className="border border-gray-300 px-4 py-2">
-                                        <Link
-                                            href={edit_endpoint}
+                                        <button
+                                            onClick={() => handleEditCategory(category)}
                                             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded-md text-sm mr-2"
                                         >
                                             Edit
-                                        </Link>
+                                        </button>
                                         <button
                                             onClick={() => handleDelete(category.id)}
                                             className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-md text-sm"
@@ -118,7 +126,6 @@ export default function ProductCategoriesListPage() {
                                             Remove
                                         </button>
                                     </td>
-
                                 </tr>
                             );
                         })}
@@ -134,7 +141,10 @@ export default function ProductCategoriesListPage() {
             {isModalOpen && (
                 <div className="fixed inset-0 flex justify-center items-center z-50 bg-gray-500 bg-opacity-50">
                     <div className="bg-white p-8 rounded-lg w-full sm:w-1/2">
-                        <ProductCategoryCreatePage closeModal={closeModal} />
+                        <ProductCategoryCreateEditFormPage
+                            categoryToEdit={categoryToEdit}
+                            closeModal={closeModal}
+                        />
                     </div>
                 </div>
             )}
