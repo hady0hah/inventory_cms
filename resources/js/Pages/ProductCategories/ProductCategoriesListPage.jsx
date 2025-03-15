@@ -3,6 +3,7 @@ import { usePage } from '@inertiajs/react';
 import { Link } from '@inertiajs/react';
 import axios from 'axios';
 import endpoints from '@/plugins/endpoints';
+import ProductCategoryCreatePage from './ProductCategoryCreatePage';
 
 export default function ProductCategoriesListPage() {
     const user = usePage().props.auth.user;
@@ -11,6 +12,7 @@ export default function ProductCategoriesListPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [search, setSearch] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         axios.get(endpoints.product_categories.list)
@@ -53,10 +55,23 @@ export default function ProductCategoriesListPage() {
             .catch(error => console.error("Error deleting category:", error));
     };
 
+    const handleCreateCategory = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <div className="container mx-auto p-6">
+            <button
+                onClick={handleCreateCategory}
+                className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md mb-4"
+            >
+                Add Category
+            </button>
             <h1 className="text-2xl font-bold mb-4">Product Categories</h1>
-
 
             <input
                 type="text"
@@ -112,6 +127,14 @@ export default function ProductCategoriesListPage() {
 
             {!loading && !error && filteredCategories.length === 0 && (
                 <p className="text-gray-500">No categories found.</p>
+            )}
+
+            {isModalOpen && (
+                <div className="fixed inset-0 flex justify-center items-center z-50 bg-gray-500 bg-opacity-50">
+                    <div className="bg-white p-8 rounded-lg w-full sm:w-1/2">
+                        <ProductCategoryCreatePage closeModal={closeModal} />
+                    </div>
+                </div>
             )}
         </div>
     );
