@@ -74,7 +74,7 @@ export default function ProductCategoriesListPage() {
                     <table className="w-full border-collapse border border-gray-300">
                         <thead className="bg-gray-100">
                         <tr>
-                            <th className="border border-gray-300 px-4 py-2 text-left">#</th>
+                            <th className="border border-gray-300 px-4 py-2 text-left">Category ID</th>
                             <th className="border border-gray-300 px-4 py-2 text-left">Category Name</th>
                             <th className="border border-gray-300 px-4 py-2 text-left">Actions</th>
                         </tr>
@@ -85,7 +85,7 @@ export default function ProductCategoriesListPage() {
 
                             return (
                                 <tr key={category.id} className="hover:bg-gray-50">
-                                    <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
+                                    <td className="border border-gray-300 px-4 py-2">{category.id}</td>
                                     <td className="border border-gray-300 px-4 py-2">{category.name}</td>
                                     <td className="border border-gray-300 px-4 py-2">
                                         <Link

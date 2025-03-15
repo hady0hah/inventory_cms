@@ -52,15 +52,28 @@ class ProductCategoryController extends Controller
      */
     public function update(Request $request, ProductCategory $productCategory)
     {
-        //
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $productCategory->update([
+            'name' => $request->input('name'),
+        ]);
+
+        return response()->json(['message' => 'Category updated successfully.']);
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProductCategory $productCategory)
+    public function destroy($id)
     {
-        //
+        $productCategory = ProductCategory::findOrFail($id);
+        $productCategory->delete();
+
+        return response()->json(['message' => 'Category deleted successfully.']);
     }
 
 

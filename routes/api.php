@@ -4,5 +4,11 @@ use App\Http\Controllers\ProductCategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/categories', [ProductCategoryController::class, 'getAllProductCategories']);
+// Product Categories APIs
+Route::prefix('category')->group(function () {
+    Route::get('getAll', [ProductCategoryController::class, 'getAllProductCategories'])->name('categories.index');
+    Route::put('edit/{id}', [ProductCategoryController::class, 'update'])->name('categories.update');
+    Route::delete('delete/{id}', [ProductCategoryController::class, 'destroy'])->name('categories.destroy');
+});
+
 
