@@ -69,19 +69,31 @@ class ProductCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProductCategory $productCategory)
+    public function update(Request $request, $id)
     {
-
+        $productCategory = ProductCategory::findOrFail($id);
         $request->validate([
             'name' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $productCategory->update([
-            'name' => $request->input('name'),
-        ]);
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images/categories', 'public');
+
+            $productCategory->update([
+                'name' => $request->input('name'),
+                'image_path' => $imagePath,
+            ]);
+        } else {
+            $productCategory->update([
+                'name' => $request->input('name'),
+            ]);
+        }
 
         return response()->json(['message' => 'Category updated successfully.']);
     }
+
+
 
 
     /**
