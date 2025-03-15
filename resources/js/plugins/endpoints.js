@@ -1,7 +1,7 @@
 let endpoints = {
     'product_categories': {
         'list':     '/api/category/getAll',
-        'add':      '/api/category',
+        'create':      '/api/category/create',
         'delete':   '/api/category/delete/:id',
         'edit':     '/api/category/edit?id=:id',
     },
