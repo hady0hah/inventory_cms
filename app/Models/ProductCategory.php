@@ -21,6 +21,6 @@ class ProductCategory extends BaseModel
 
     public function items()
     {
-        return $this->hasMany(ProductCategory::class, 'product_category_id');
+        return $this->hasMany(Items::class, 'product_category_id');
     }
 }

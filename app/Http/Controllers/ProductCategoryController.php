@@ -98,9 +98,16 @@ class ProductCategoryController extends Controller
 
     public function getAllProductCategories()
     {
-        $categories = ProductCategory::all();
+//        $categories = ProductCategory::all();
         // no need for now to paginate
 //        $categories = ProductCategory::paginate(10);
+        $categories = ProductCategory::withCount([
+            'items as available_items_count' => function ($query) {
+                $query->where('is_sold', 0);
+            }
+        ])
+            ->get();
+
         return response()->json($categories);
     }
 }

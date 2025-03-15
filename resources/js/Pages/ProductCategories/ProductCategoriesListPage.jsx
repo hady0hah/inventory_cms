@@ -91,6 +91,7 @@ export default function ProductCategoriesListPage() {
                         <tr>
                             <th className="border border-gray-300 px-4 py-2 text-left">Category ID</th>
                             <th className="border border-gray-300 px-4 py-2 text-left">Category Name</th>
+                            <th className="border border-gray-300 px-4 py-2 text-left">Count</th>
                             <th className="border border-gray-300 px-4 py-2 text-left">Actions</th>
                         </tr>
                         </thead>
@@ -102,6 +103,7 @@ export default function ProductCategoriesListPage() {
                                 <tr key={category.id} className="hover:bg-gray-50">
                                     <td className="border border-gray-300 px-4 py-2">{category.id}</td>
                                     <td className="border border-gray-300 px-4 py-2">{category.name}</td>
+                                    <td className="border border-gray-300 px-4 py-2">{category.available_items_count}</td>
                                     <td className="border border-gray-300 px-4 py-2">
                                         <Link
                                             href={edit_endpoint}
