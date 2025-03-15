@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { usePage } from '@inertiajs/react';
-import { Link } from '@inertiajs/react';
+import { usePage, Link } from '@inertiajs/react';
 import axios from 'axios';
 import endpoints from '@/plugins/endpoints';
-import ProductCategoryCreateEditFormPage from './ProductCategoryCreateEditFormPage';
+import ProductCategoryCreateEditFormPage from "@/Pages/ProductCategories/ProductCategoryCreateEditFormPage.jsx";
+
 
 export default function ProductCategoriesListPage() {
     const user = usePage().props.auth.user;
@@ -29,7 +29,6 @@ export default function ProductCategoriesListPage() {
             });
     }, []);
 
-
     useEffect(() => {
         if (search) {
             setFilteredCategories(
@@ -41,7 +40,6 @@ export default function ProductCategoriesListPage() {
             setFilteredCategories(categories);
         }
     }, [search, categories]);
-
 
     const handleDelete = (id) => {
         if (!window.confirm("Are you sure you want to delete this category?")) return;
@@ -71,8 +69,15 @@ export default function ProductCategoriesListPage() {
         setCategoryToEdit(null);
     };
 
+    const handleShowItems = (category_id) => {
+        var items_list_page = endpoints.resolve(endpoints.items.list_page, { category_id });
+        window.location.href = items_list_page;
+
+    };
+
     return (
-        <div className="container mx-auto p-6">
+        <>
+            <div className="container mx-auto p-6">
             <button
                 onClick={handleCreateCategory}
                 className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md mb-4"
@@ -121,9 +126,15 @@ export default function ProductCategoriesListPage() {
                                         </button>
                                         <button
                                             onClick={() => handleDelete(category.id)}
-                                            className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-md text-sm"
+                                            className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-md text-sm mr-2"
                                         >
                                             Remove
+                                        </button>
+                                        <button
+                                            onClick={() => handleShowItems(category.id)}
+                                            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded-md text-sm"
+                                        >
+                                            Show Items
                                         </button>
                                     </td>
                                 </tr>
@@ -149,5 +160,6 @@ export default function ProductCategoriesListPage() {
                 </div>
             )}
         </div>
+        </>
     );
 }
