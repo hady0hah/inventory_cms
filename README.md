@@ -1,66 +1,86 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1>Inventory Management System</h1>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<h2>Project Overview</h2>
+<p>The Inventory Management System is a web application designed to help businesses manage and track products in their warehouse efficiently. The system provides real-time visibility into stock levels and sales, ensuring users can manage their inventory with ease.</p>
 
-## About Laravel
+<h2>Features</h2>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<h3>Authentication & Authorization</h3>
+<ul>
+  <li><strong>Login Page:</strong> Users can log in with their credentials.</li>
+  <li><strong>Sign Up:</strong> New users can register an account.</li>
+  <li><strong>Role-based Access:</strong> Users can only view and manage their own products.</li>
+</ul>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<h3>Product Types Management</h3>
+<ul>
+  <li>Display a table of product types with ID, name, count, and actions (edit/delete).</li>
+  <li>Each product type includes an image.</li>
+  <li>Clicking a product type shows all associated items.</li>
+  <li>Search functionality by product type name.</li>
+  <li>Add a new product type via a popup form, including name, description, and image upload.</li>
+</ul>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<h3>Items Management</h3>
+<ul>
+  <li>Display a table of items for a selected product type with ID, serial number, and actions (edit/delete).</li>
+  <li>Mark items as SOLD, updating stock count dynamically.</li>
+  <li>Add new items by entering serial numbers manually or in bulk.</li>
+  <li>Search functionality by serial number.</li>
+  <li>Barcode scanning feature for adding serial numbers via a camera.</li>
+</ul>
 
-## Learning Laravel
+<h2>Technology Stack</h2>
+<ul>
+  <li><strong>Frontend:</strong> ReactJS</li>
+  <li><strong>Backend:</strong> PHP/Laravel</li>
+  <li><strong>Database:</strong> MySQL</li>
+  <li><strong>Authentication:</strong> Laravel Breeze</li>
+</ul>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<h2>Setup Instructions</h2>
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+<h3>Step 1: Clone the Repository</h3>
+<pre><code>git clone https://github.com/hady43/inventory_cms.git
+cd inventory_cms</code></pre>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+<h3>Step 2: Install Backend Dependencies</h3>
+<pre><code>composer install</code></pre>
 
-## Laravel Sponsors
+<h3>Step 3: Configure Environment Variables</h3>
+<ul>
+  <li>Copy .env.example to .env:</li>
+  <pre><code>cp .env.example .env</code></pre>
+  <li>Update .env with your database credentials.</li>
+  <li>Generate application key:</li>
+  <pre><code>php artisan key:generate</code></pre>
+</ul>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+<h3>Step 4: Set Up Database</h3>
+<pre><code>php artisan migrate</code></pre>
 
-### Premium Partners
+<h3>Step 5: Create Storage Link</h3>
+<pre><code>php artisan storage:link</code></pre>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+<h3>Step 6: Install Frontend Dependencies</h3>
+<pre><code>npm install</code></pre>
 
-## Contributing
+<h3>Step 7: Install Barcode Scanner</h3>
+<pre><code>npm install html5-qrcode</code></pre>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+<h3>Step 8: Run the Application</h3>
+<ul>
+  <li>Start Backend Server:</li>
+  <pre><code>php artisan serve</code></pre>
+  <li>Start Frontend Development Server:</li>
+  <pre><code>npm run dev</code></pre>
+</ul>
 
-## Code of Conduct
+<h2>Additional Configuration</h2>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<h3>Camera Permissions</h3>
+<p>Ensure your browser has access to the camera for barcode scanning:</p>
+<ul>
+  <li>Open Chrome settings: <code>chrome://settings/content/camera</code></li>
+  <li>Allow camera access for the application.</li>
+</ul>
