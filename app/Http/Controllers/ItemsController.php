@@ -72,9 +72,29 @@ class ItemsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Items $items)
+    public function update(Request $request, $id)
     {
-        //
+        $item = Items::findOrFail($id);
+        $user_id = $request->input('uid');
+        $isAllowedResponse = $this->userAllowedToAccessItem($user_id, $id);
+
+        if ($isAllowedResponse instanceof \Illuminate\Http\JsonResponse) {
+            return $isAllowedResponse;
+        }
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'serial_number' => 'required|string',
+            'uid' => 'required|int',
+            'category_id' => 'required|int',
+        ]);
+
+        $item->update([
+            'name' => $request->input('name'),
+            'serial_number' => $request->input('serial_number'),
+        ]);
+
+        return response()->json(['message' => 'Item updated successfully.']);
     }
 
     /**
