@@ -5,6 +5,7 @@ import endpoints from '@/plugins/endpoints';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/react';
 import CheckBoxComponent from '@/Components/Checkbox';
+import ItemCreateEditFormPage from "@/Pages/Items/ItemCreateEditFormPage";
 
 export default function ItemsListPage() {
     const user = usePage().props.auth.user;
@@ -13,9 +14,10 @@ export default function ItemsListPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [search, setSearch] = useState('');
-    const [categoryId, setCategoryId] = useState(null);
+    const [category_id, setCategoryId] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [itemToEdit, setItemToEdit] = useState(null);
     const uid = user.id;
-
 
     useEffect(() => {
         const path = window.location.pathname;
@@ -46,6 +48,18 @@ export default function ItemsListPage() {
     }, [search, items]);
 
     const handleCreateItem = () => {
+        setItemToEdit(null);
+        setIsModalOpen(true);
+    };
+
+    const handleEditItem = (item) => {
+        setItemToEdit(item);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setItemToEdit(null);
     };
 
     const handleDelete = (id) => {
@@ -82,10 +96,6 @@ export default function ItemsListPage() {
             });
     };
 
-    const handleEditItem = (item) => {
-
-    };
-
     return (
         <>
             <AuthenticatedLayout
@@ -106,8 +116,8 @@ export default function ItemsListPage() {
                                 >
                                     Add Item
                                 </button>
-                                <h1 className="text-2xl font-bold mb-4">Items</h1>
 
+                                <h1 className="text-2xl font-bold mb-4">Items</h1>
                             </div>
 
                             <div className="container mx-auto p-6">
@@ -153,10 +163,11 @@ export default function ItemsListPage() {
                                                             Remove
                                                         </button>
                                                         <label>
-                                                            <CheckBoxComponent checked={item.is_sold} onChange={() => handleSoldChange(item.id)}>
-                                                            </CheckBoxComponent>
+                                                            <CheckBoxComponent
+                                                                checked={item.is_sold}
+                                                                onChange={() => handleSoldChange(item.id)}
+                                                            />
                                                             Mark As Sold
-
                                                         </label>
                                                     </td>
                                                 </tr>
@@ -174,6 +185,17 @@ export default function ItemsListPage() {
                     </div>
                 </div>
             </AuthenticatedLayout>
+
+            {isModalOpen && (
+                <div className="fixed inset-0 flex justify-center items-center z-50 bg-gray-500 bg-opacity-50">
+                    <div className="bg-white p-8 rounded-lg w-full sm:w-1/2">
+                        <ItemCreateEditFormPage
+                            categoryToEdit={itemToEdit}
+                            closeModal={closeModal}
+                        />
+                    </div>
+                </div>
+            )}
         </>
     );
 }
