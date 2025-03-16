@@ -8,9 +8,9 @@ let endpoints = {
     'items': {
         'list_page':     '/items_list/:category_id',
         'list_data':     '/api/item/getAll/:uid/:category_id',
-        'add':           '/api/item',
+        'create':        '/api/item/create',
         'delete':        '/api/item/delete/:id/:uid',
-        'edit':          '/api/item/edit/:id/:uid',
+        'edit':          '/api/item/edit/:id',
         'change_status': '/api/item/change_status/:id/:uid',
     },
 

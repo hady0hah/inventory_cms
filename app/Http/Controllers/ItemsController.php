@@ -27,9 +27,22 @@ class ItemsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'serial_number' => 'required|string',
+            'uid' => 'required|int',
+            'category_id' => 'required|int',
+        ]);
+        $item = Items::create([
+            'name' => $request->input('name'),
+            'serial_number' => $request->input('serial_number'),
+            'user_id' => $request->input('uid'),
+            'product_category_id' => $request->input('category_id'),
+        ]);
+
+        return response()->json(['message' => 'Item created successfully!', 'item' => $item], 201);
     }
 
     /**
