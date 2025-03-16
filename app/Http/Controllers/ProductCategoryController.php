@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductCategory;
+use App\Repositories\ProductCategoriesRepository;
 use Illuminate\Http\Request;
 
 class ProductCategoryController extends Controller
 {
+
+    protected $productCategoryRepository;
+
+    public function __construct(ProductCategoriesRepository $productCategoryRepository)
+    {
+        $this->productCategoryRepository = $productCategoryRepository;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -110,15 +118,8 @@ class ProductCategoryController extends Controller
 
     public function getAllProductCategories()
     {
-//        $categories = ProductCategory::all();
-        // no need for now to paginate
-//        $categories = ProductCategory::paginate(10);
-        $categories = ProductCategory::withCount([
-            'items as available_items_count' => function ($query) {
-                $query->where('is_sold', 0);
-            }
-        ])
-            ->get();
+        $categories = $this->productCategoryRepository->getAllProductCategoriesWithCountOfNotSoldItems();
+
 
         return response()->json($categories);
     }
