@@ -188,7 +188,7 @@ export default function ItemsListPage() {
 
             {isModalOpen && (
                 <div className="fixed inset-0 flex justify-center items-center z-50 bg-gray-500 bg-opacity-50">
-                    <div className="bg-white p-8 rounded-lg w-full sm:w-1/2">
+                    <div className="bg-white p-8 rounded-lg w-full sm:w-1">
                         <ItemCreateEditFormPage
                             itemToEdit={itemToEdit}
                             closeModal={closeModal}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import endpoints from '@/plugins/endpoints';
-import {usePage} from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 
 export default function ItemCreateEditFormPage({ itemToEdit, closeModal }) {
     const [name, setName] = useState('');
@@ -17,7 +17,6 @@ export default function ItemCreateEditFormPage({ itemToEdit, closeModal }) {
         if (itemToEdit) {
             setName(itemToEdit.name);
             setSerialNumber(itemToEdit.serial_number);
-
         }
     }, [itemToEdit]);
 
@@ -27,7 +26,7 @@ export default function ItemCreateEditFormPage({ itemToEdit, closeModal }) {
         setCategoryId(categoryIdFromPath);
     }, []);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e, createAnother = false) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
@@ -38,16 +37,19 @@ export default function ItemCreateEditFormPage({ itemToEdit, closeModal }) {
             category_id: categoryId,
             uid: uid,
         };
-        console.log(uid)
-        console.log(categoryId)
+
         const request = itemToEdit
             ? axios.put(endpoints.resolve(endpoints.items.edit, { id: itemToEdit.id }), data)
-            : axios.post(endpoints.resolve(endpoints.items.create, { category_id: categoryId , uid: uid }), data);
+            : axios.post(endpoints.resolve(endpoints.items.create, { category_id: categoryId, uid: uid }), data);
 
         request
             .then((response) => {
                 setLoading(false);
-                closeModal();
+                if (!createAnother) {
+                    closeModal();
+                } else {
+                    setSerialNumber('');
+                }
             })
             .catch((error) => {
                 setLoading(false);
@@ -60,7 +62,7 @@ export default function ItemCreateEditFormPage({ itemToEdit, closeModal }) {
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
             <div className="bg-white p-6 rounded-md shadow-lg w-full sm:w-96">
                 <h2 className="text-xl font-semibold mb-4">{itemToEdit ? 'Edit Item' : 'Create Item'}</h2>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={(e) => handleSubmit(e)}>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">Name</label>
                         <input
@@ -97,6 +99,16 @@ export default function ItemCreateEditFormPage({ itemToEdit, closeModal }) {
                         >
                             {loading ? 'Saving...' : itemToEdit ? 'Update Item' : 'Create Item'}
                         </button>
+                        {!itemToEdit && (
+                            <button
+                                type="button"
+                                onClick={(e) => handleSubmit(e, true)}
+                                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md ml-2"
+                                disabled={loading}
+                            >
+                                {loading ? 'Saving...' : 'Create and Create Another'}
+                            </button>
+                        )}
                     </div>
                 </form>
             </div>
