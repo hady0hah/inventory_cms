@@ -9,7 +9,7 @@ let endpoints = {
         'list_page':     '/items_list/:category_id',
         'list_data':     '/api/item/getAll/:uid/:category_id',
         'add':      '/api/item',
-        'delete':   '/api/item/delete/:id',
+        'delete':   '/api/item/delete/:id/:uid',
         'edit':     '/api/item/edit/:id',
         'change_status': '/api/item/status/:id',
     },

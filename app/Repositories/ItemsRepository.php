@@ -20,7 +20,7 @@ class ItemsRepository
         return $items;
     }
 
-    public function itemBelongsToUser($item_id, $user_id)
+    public function itemBelongsToUser($user_id, $item_id)
     {
         return Items::where('id', $item_id)
             ->where('user_id', $user_id)

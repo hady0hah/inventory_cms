@@ -13,9 +13,10 @@ export default function ItemsListPage() {
     const [error, setError] = useState(null);
     const [search, setSearch] = useState('');
     const [categoryId, setCategoryId] = useState(null);
+    const uid = user.id;
+
 
     useEffect(() => {
-        const uid = user.id;
         const path = window.location.pathname;
         const category_id = path.split('/').pop();
         setCategoryId(category_id);
@@ -49,7 +50,7 @@ export default function ItemsListPage() {
     const handleDelete = (id) => {
         if (!window.confirm("Are you sure you want to delete this item?")) return;
 
-        const delete_endpoint = endpoints.resolve(endpoints.items.delete, { id });
+        const delete_endpoint = endpoints.resolve(endpoints.items.delete, { id , uid });
 
         axios.delete(delete_endpoint)
             .then(() => {
@@ -111,6 +112,7 @@ export default function ItemsListPage() {
                                             <thead className="bg-gray-100">
                                             <tr>
                                                 <th className="border border-gray-300 px-4 py-2 text-left">ID</th>
+                                                <th className="border border-gray-300 px-4 py-2 text-left">Name</th>
                                                 <th className="border border-gray-300 px-4 py-2 text-left">Serial Number</th>
                                                 <th className="border border-gray-300 px-4 py-2 text-left">Actions</th>
                                             </tr>
@@ -119,6 +121,7 @@ export default function ItemsListPage() {
                                             {filteredItems.map((item) => (
                                                 <tr key={item.id} className="hover:bg-gray-50">
                                                     <td className="border border-gray-300 px-4 py-2">{item.id}</td>
+                                                    <td className="border border-gray-300 px-4 py-2">{item.name}</td>
                                                     <td className="border border-gray-300 px-4 py-2">{item.serial_number}</td>
                                                     <td className="border border-gray-300 px-4 py-2">
                                                         <button

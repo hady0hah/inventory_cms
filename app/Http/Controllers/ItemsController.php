@@ -67,10 +67,18 @@ class ItemsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Items $items)
+    public function destroy($id, $user_id)
     {
-        //
+        if ($this->itemBelongsToUser($user_id, $id)) {
+            $item = Items::findOrFail($id);
+            $item->delete();
+
+            return response()->json(['message' => 'Item deleted successfully.']);
+        }
+
+        return response()->json(['message' => 'Not Allowed!'], 403);
     }
+
 
     public function getItemsByUserAndCategory($uid, $category_id)
     {
