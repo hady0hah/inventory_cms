@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Items;
+use App\Repositories\ItemsRepository;
 use Illuminate\Http\Request;
 
 class ItemsController extends Controller
 {
+
+    protected $itemsRepository;
+
+    public function __construct(ItemsRepository $itemsRepository)
+    {
+        $this->itemsRepository = $itemsRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -62,4 +71,18 @@ class ItemsController extends Controller
     {
         //
     }
+
+    public function getItemsByUserAndCategory($uid, $category_id)
+    {
+        $items = $this->itemsRepository->getItemsByUserAndCategory($uid, $category_id);
+
+        return response()->json($items);
+    }
+
+    public function itemBelongsToUser($user_id,$item_id)
+    {
+
+        return $this->itemsRepository->itemBelongsToUser($user_id, $item_id);
+    }
+
 }
