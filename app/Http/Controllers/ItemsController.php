@@ -111,7 +111,7 @@ class ItemsController extends Controller
         $item = Items::findOrFail($id);
         $item->is_sold = !$item->is_sold;
         $item->save();
-        return response()->json(['message' => 'Item Status Changed successfully.']);
+        return response()->json(['message' => 'Item Status Changed successfully.','item_id' => $id , 'is_sold' => $item->is_sold]);
 
     }
 }

@@ -70,7 +70,11 @@ export default function ItemsListPage() {
         const item = updatedItems.find(item => item.id === id);
         axios.put(endpoints.resolve(endpoints.items.change_status, { id: item.id, uid }))
             .then(response => {
-                
+                const { is_sold } = response.data;
+                const updatedItemsWithResponse = items.map(item =>
+                    item.id === id ? { ...item, is_sold: is_sold } : item
+                );
+                setItems(updatedItemsWithResponse);
             })
             .catch(error => {
                 console.error("Error updating item status:", error);
@@ -149,7 +153,7 @@ export default function ItemsListPage() {
                                                             Remove
                                                         </button>
                                                         <label>
-                                                            <CheckBoxComponent checked={item.sold} onChange={() => handleSoldChange(item.id)}>
+                                                            <CheckBoxComponent checked={item.is_sold} onChange={() => handleSoldChange(item.id)}>
                                                             </CheckBoxComponent>
                                                             Mark As Sold
 
