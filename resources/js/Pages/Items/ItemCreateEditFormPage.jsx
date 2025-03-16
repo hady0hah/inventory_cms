@@ -41,7 +41,7 @@ export default function ItemCreateEditFormPage({ itemToEdit, closeModal }) {
         console.log(uid)
         console.log(categoryId)
         const request = itemToEdit
-            ? axios.put(endpoints.resolve(endpoints.items.edit, { id: itemToEdit.id , category_id: categoryId, uid: uid }), data)
+            ? axios.put(endpoints.resolve(endpoints.items.edit, { id: itemToEdit.id }), data)
             : axios.post(endpoints.resolve(endpoints.items.create, { category_id: categoryId , uid: uid }), data);
 
         request
