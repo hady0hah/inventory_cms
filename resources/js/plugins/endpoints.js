@@ -7,7 +7,7 @@ let endpoints = {
     },
     'items': {
         'list_page':     '/items_list/:category_id',
-        'list_data':     '/api/item/category/:category_id',
+        'list_data':     '/api/item/getAll/:uid/:category_id',
         'add':      '/api/item',
         'delete':   '/api/item/delete/:id',
         'edit':     '/api/item/edit/:id',
