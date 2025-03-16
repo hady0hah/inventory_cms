@@ -4,6 +4,7 @@ import axios from 'axios';
 import endpoints from '@/plugins/endpoints';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/react';
+import CheckBoxComponent from '@/Components/Checkbox';
 
 export default function ItemsListPage() {
     const user = usePage().props.auth.user;
@@ -137,13 +138,10 @@ export default function ItemsListPage() {
                                                             Remove
                                                         </button>
                                                         <label>
+                                                            <CheckBoxComponent checked={item.sold} onChange={() => handleSoldChange(item.id)}>
+                                                            </CheckBoxComponent>
                                                             Mark As Sold
-                                                            <input
-                                                                type="checkbox"
-                                                                checked={item.sold}
-                                                                onChange={() => handleSoldChange(item.id)}
-                                                                className="ml-2"
-                                                            />
+
                                                         </label>
                                                     </td>
                                                 </tr>
