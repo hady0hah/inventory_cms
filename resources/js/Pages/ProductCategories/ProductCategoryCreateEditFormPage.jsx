@@ -53,46 +53,49 @@ export default function ProductCategoryCreateEditFormPage({ categoryToEdit, clos
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Category Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="mb-4 p-2 border rounded w-full"
-                required
-            />
-            <textarea
-                placeholder="Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="mb-4 p-2 border rounded w-full"
-            />
-            <div>
-                <label className="block text-sm font-medium text-gray-700">Image</label>
-                <input
-                    type="file"
-                    onChange={handleFileChange}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                />
-            </div>
-            {imagePath && <img src={imagePath} alt="Preview" className="mt-2 w-32 h-32 object-cover" />}
-            <div className="flex justify-end">
-                <button
-                    type="button"
-                    onClick={closeModal}
-                    className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-md mr-2"
-                >
-                    Cancel
-                </button>
-                <button
-                    type="submit"
-                    className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md"
-                    disabled={loading}
-                >
-                    {loading ? 'Saving...' : categoryToEdit ? 'Update Category' : 'Create Category'}
-                </button>
-            </div>
-        </form>
+        <>
+           <h2 className="text-xl font-semibold mb-4 border border-gray-300 bg-gray-100">{categoryToEdit ? 'Edit Category' : 'Create Category'}</h2>
+            <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        placeholder="Category Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="mb-4 p-2 border rounded w-full"
+                        required
+                    />
+                    <textarea
+                        placeholder="Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        className="mb-4 p-2 border rounded w-full"
+                    />
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Image</label>
+                        <input
+                            type="file"
+                            onChange={handleFileChange}
+                            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                        />
+                    </div>
+                    {imagePath && <img src={imagePath} alt="Preview" className="mt-2 w-32 h-32 object-cover" />}
+                    <div className="flex justify-end">
+                        <button
+                            type="button"
+                            onClick={closeModal}
+                            className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-md mr-2"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md"
+                            disabled={loading}
+                        >
+                            {loading ? 'Saving...' : categoryToEdit ? 'Update Category' : 'Create Category'}
+                        </button>
+                    </div>
+            </form>
+        </>
     );
 }
