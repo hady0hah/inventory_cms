@@ -19,7 +19,7 @@ Route::prefix('item')->group(function () {
     Route::post('create', [ItemsController::class, 'create'])->name('items.create');
     Route::put('edit/{id}', [ItemsController::class, 'update'])->name('items.update');
     Route::delete('delete/{id}/{uid}', [ItemsController::class, 'destroy'])->name('items.destroy');
-    Route::delete('status/{id}', [ItemsController::class, 'changeItemStatus'])->name('items.status');
+    Route::put('change_status/{id}/{uid}', [ItemsController::class, 'changeItemStatus'])->name('items.status');
 });
 
 

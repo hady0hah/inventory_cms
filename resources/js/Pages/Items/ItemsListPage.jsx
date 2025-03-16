@@ -62,9 +62,20 @@ export default function ItemsListPage() {
     };
 
     const handleSoldChange = (id) => {
-        setItems(items.map(item =>
+        const updatedItems = items.map(item =>
             item.id === id ? { ...item, sold: !item.sold } : item
-        ));
+        );
+        setItems(updatedItems);
+
+        const item = updatedItems.find(item => item.id === id);
+        axios.put(endpoints.resolve(endpoints.items.change_status, { id: item.id, uid }))
+            .then(response => {
+                
+            })
+            .catch(error => {
+                console.error("Error updating item status:", error);
+                setItems(items);
+            });
     };
 
     const handleEditItem = (item) => {

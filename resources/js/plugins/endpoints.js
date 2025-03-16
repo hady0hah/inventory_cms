@@ -11,7 +11,7 @@ let endpoints = {
         'add':           '/api/item',
         'delete':        '/api/item/delete/:id/:uid',
         'edit':          '/api/item/edit/:id/:uid',
-        'change_status': '/api/item/status/:id/:uid',
+        'change_status': '/api/item/change_status/:id/:uid',
     },
 
     resolve(url, params) {

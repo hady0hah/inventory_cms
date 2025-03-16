@@ -99,4 +99,19 @@ class ItemsController extends Controller
         }
     }
 
+
+    public function changeItemStatus($id, $user_id)
+    {
+        $isAllowedResponse = $this->userAllowedToAccessItem($user_id, $id);
+
+        if ($isAllowedResponse instanceof \Illuminate\Http\JsonResponse) {
+            return $isAllowedResponse;
+        }
+
+        $item = Items::findOrFail($id);
+        $item->is_sold = !$item->is_sold;
+        $item->save();
+        return response()->json(['message' => 'Item Status Changed successfully.']);
+
+    }
 }
