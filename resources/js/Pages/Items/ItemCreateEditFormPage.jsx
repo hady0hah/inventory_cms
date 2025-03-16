@@ -30,31 +30,67 @@ export default function ItemCreateEditFormPage({ itemToEdit, closeModal }) {
 
     useEffect(() => {
         if (showScanner) {
-            scannerRef.current = new Html5QrcodeScanner("reader", {
-                fps: 10,
-                qrbox: 250,
-                supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-            });
+            if (!scannerRef.current) {
+                scannerRef.current = new Html5QrcodeScanner("reader", {
+                    fps: 10,
+                    qrbox: 250,
+                    supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+                });
 
-            scannerRef.current.render(
-                (decodedText) => {
-                    console.log("Scanned:", decodedText);
-                    setSerialNumber(decodedText);
-                    setShowScanner(false);
-                },
-                (errorMessage) => {
-                    console.warn("Scan error:", errorMessage);
-                }
-            );
+                scannerRef.current.render(
+                    (decodedText) => {
+                        console.log("Scanned:", decodedText);
+                        setSerialNumber(decodedText);
+                        setShowScanner(false);
+                    },
+                    (errorMessage) => {
+                        console.warn("Scan error:", errorMessage);
+                    }
+                );
+            }
         }
 
+        // Cleanup the scanner when it's not needed anymore
         return () => {
             if (scannerRef.current) {
                 scannerRef.current.clear()
                     .catch(err => console.warn("Failed to clear scanner:", err));
+                scannerRef.current = null;
             }
         };
     }, [showScanner]);
+
+    const handleSubmit = (e, createAnother = false) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+
+        const data = {
+            name,
+            serial_number: serialNumber,
+            category_id: categoryId,
+            uid: uid,
+        };
+
+        const request = itemToEdit
+            ? axios.put(endpoints.resolve(endpoints.items.edit, { id: itemToEdit.id }), data)
+            : axios.post(endpoints.resolve(endpoints.items.create, { category_id: categoryId, uid: uid }), data);
+
+        request
+            .then((response) => {
+                setLoading(false);
+                if (!createAnother) {
+                    closeModal();
+                } else {
+                    setSerialNumber(''); // Clear serial number for new creation Create and create another
+                }
+            })
+            .catch((error) => {
+                setLoading(false);
+                setError("Failed to save item.");
+                console.error("Error:", error);
+            });
+    };
 
     return (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
