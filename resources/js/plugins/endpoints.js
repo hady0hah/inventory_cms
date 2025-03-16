@@ -1,16 +1,16 @@
 let endpoints = {
     'product_categories': {
         'list':     '/api/category/getAll',
-        'create':      '/api/category/create',
+        'create':   '/api/category/create',
         'delete':   '/api/category/delete/:id',
         'edit':     '/api/category/edit/:id',
     },
     'items': {
         'list_page':     '/items_list/:category_id',
         'list_data':     '/api/item/getAll/:uid/:category_id',
-        'add':      '/api/item',
-        'delete':   '/api/item/delete/:id/:uid',
-        'edit':     '/api/item/edit/:id',
+        'add':           '/api/item',
+        'delete':        '/api/item/delete/:id/:uid',
+        'edit':          '/api/item/edit/:id',
         'change_status': '/api/item/status/:id',
     },
 
