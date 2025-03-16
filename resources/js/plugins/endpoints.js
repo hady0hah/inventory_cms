@@ -10,8 +10,8 @@ let endpoints = {
         'list_data':     '/api/item/getAll/:uid/:category_id',
         'add':           '/api/item',
         'delete':        '/api/item/delete/:id/:uid',
-        'edit':          '/api/item/edit/:id',
-        'change_status': '/api/item/status/:id',
+        'edit':          '/api/item/edit/:id/:uid',
+        'change_status': '/api/item/status/:id/:uid',
     },
 
     resolve(url, params) {

@@ -17,6 +17,9 @@ class ItemsRepository
             ->where('product_category_id', $category_id)
             ->get();
 
+        $items = Items::where('product_category_id', $category_id)
+            ->get();
+
         return $items;
     }
 

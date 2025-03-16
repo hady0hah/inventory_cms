@@ -69,14 +69,17 @@ class ItemsController extends Controller
      */
     public function destroy($id, $user_id)
     {
-        if ($this->itemBelongsToUser($user_id, $id)) {
-            $item = Items::findOrFail($id);
-            $item->delete();
+        $isAllowedResponse = $this->userAllowedToAccessItem($user_id, $id);
 
-            return response()->json(['message' => 'Item deleted successfully.']);
+        if ($isAllowedResponse instanceof \Illuminate\Http\JsonResponse) {
+            return $isAllowedResponse;
         }
 
-        return response()->json(['message' => 'Not Allowed!'], 403);
+       $item = Items::findOrFail($id);
+       $item->delete();
+
+       return response()->json(['message' => 'Item deleted successfully.']);
+
     }
 
 
@@ -87,10 +90,13 @@ class ItemsController extends Controller
         return response()->json($items);
     }
 
-    public function itemBelongsToUser($user_id,$item_id)
+    public function userAllowedToAccessItem($user_id,$item_id)
     {
+        $isAllowed = $this->itemsRepository->itemBelongsToUser($user_id, $item_id);
 
-        return $this->itemsRepository->itemBelongsToUser($user_id, $item_id);
+        if(!$isAllowed){
+            return response()->json(['message' => 'Not Allowed!'], 403);
+        }
     }
 
 }
