@@ -21,13 +21,16 @@ export default function ItemCreateEditFormPage({ itemToEdit, closeModal }) {
         }
     }, [itemToEdit]);
 
+    useEffect(() => {
+        const path = window.location.pathname;
+        const categoryIdFromPath = path.split('/').pop();
+        setCategoryId(categoryIdFromPath);
+    }, []);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
-
-        const path = window.location.pathname;
-        setCategoryId(path.split('/').pop());
 
         const data = {
             name,
